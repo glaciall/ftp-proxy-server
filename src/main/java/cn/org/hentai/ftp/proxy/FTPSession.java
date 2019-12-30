@@ -1,8 +1,7 @@
 package cn.org.hentai.ftp.proxy;
 
 import cn.org.hentai.ftp.interceptor.AbstractSessionInterceptor;
-import cn.org.hentai.ftp.interceptor.MyCustomSessionInterceptor;
-import cn.org.hentai.ftp.util.ByteUtils;
+import cn.org.hentai.ftp.interceptor.PassiveProxyInterceptor;
 import cn.org.hentai.ftp.util.Configs;
 import cn.org.hentai.ftp.util.Packet;
 import io.netty.channel.ChannelHandlerContext;
@@ -41,7 +40,7 @@ public class FTPSession extends Thread
 
     private AbstractSessionInterceptor getSessionInterceptor()
     {
-        return new MyCustomSessionInterceptor();
+        return new PassiveProxyInterceptor();
     }
 
     public void run()

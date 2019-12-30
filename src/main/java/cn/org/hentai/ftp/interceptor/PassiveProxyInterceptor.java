@@ -9,7 +9,7 @@ import cn.org.hentai.ftp.util.FTPUtils;
 /**
  * Created by matrixy on 2019/12/28.
  */
-public class MyCustomSessionInterceptor extends SimpleSessionInterceptor
+public class PassiveProxyInterceptor extends SimpleSessionInterceptor
 {
     PassiveDataTransfer passiveDataTransfer = null;
 

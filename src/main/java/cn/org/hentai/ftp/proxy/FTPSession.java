@@ -22,7 +22,7 @@ public class FTPSession extends Thread
     ChannelHandlerContext client;
     LinkedList<Packet> packets;
 
-    static Class<? extends AbstractSessionInterceptor> defaultSessionInterceptor = PassiveProxyInterceptor.class;
+    static Class<? extends AbstractSessionInterceptor> defaultSessionInterceptor = null;
 
     public static void setDefaultSessionInterceptor(Class<? extends AbstractSessionInterceptor> defaultSessionInterceptor)
     {

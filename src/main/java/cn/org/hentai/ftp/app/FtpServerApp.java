@@ -1,6 +1,7 @@
 package cn.org.hentai.ftp.app;
 
 import cn.org.hentai.ftp.interceptor.PassiveProxyInterceptor;
+import cn.org.hentai.ftp.interceptor.TestSessionInterceptor;
 import cn.org.hentai.ftp.proxy.*;
 import cn.org.hentai.ftp.util.Configs;
 import io.netty.bootstrap.ServerBootstrap;
@@ -31,7 +32,7 @@ public class FtpServerApp
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // 设置默认的会话消息拦截器
-        FTPSession.setDefaultSessionInterceptor(PassiveProxyInterceptor.class);
+        FTPSession.setDefaultSessionInterceptor(TestSessionInterceptor.class);
 
         Signal.handle(new Signal("TERM"), new SignalHandler()
         {

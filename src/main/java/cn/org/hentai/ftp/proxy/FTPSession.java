@@ -22,6 +22,13 @@ public class FTPSession extends Thread
     ChannelHandlerContext client;
     LinkedList<Packet> packets;
 
+    static Class<? extends AbstractSessionInterceptor> defaultSessionInterceptor = PassiveProxyInterceptor.class;
+
+    public static void setDefaultSessionInterceptor(Class<? extends AbstractSessionInterceptor> defaultSessionInterceptor)
+    {
+        FTPSession.defaultSessionInterceptor = defaultSessionInterceptor;
+    }
+
     public FTPSession(ChannelHandlerContext client)
     {
         this.lock = new Object();
@@ -40,7 +47,14 @@ public class FTPSession extends Thread
 
     private AbstractSessionInterceptor getSessionInterceptor()
     {
-        return new PassiveProxyInterceptor();
+        try
+        {
+            return (AbstractSessionInterceptor) defaultSessionInterceptor.newInstance();
+        }
+        catch(Exception ex)
+        {
+            throw new RuntimeException(ex);
+        }
     }
 
     public void run()

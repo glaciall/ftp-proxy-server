@@ -1,9 +1,7 @@
 package cn.org.hentai.ftp.app;
 
-import cn.org.hentai.ftp.proxy.ConnectionManager;
-import cn.org.hentai.ftp.proxy.FTPHandler;
-import cn.org.hentai.ftp.proxy.FTPMessageDecoder;
-import cn.org.hentai.ftp.proxy.FTPMessageEncoder;
+import cn.org.hentai.ftp.interceptor.PassiveProxyInterceptor;
+import cn.org.hentai.ftp.proxy.*;
 import cn.org.hentai.ftp.util.Configs;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -28,6 +26,12 @@ public class FtpServerApp
         ConnectionManager.init();
 
         final FTPServer ftpServer = new FTPServer();
+
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // 设置默认的会话消息拦截器
+        FTPSession.setDefaultSessionInterceptor(PassiveProxyInterceptor.class);
 
         Signal.handle(new Signal("TERM"), new SignalHandler()
         {

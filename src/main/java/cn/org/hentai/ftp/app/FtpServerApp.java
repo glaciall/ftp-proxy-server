@@ -25,6 +25,7 @@ public class FtpServerApp
     {
         Configs.init("/app.properties");
         ConnectionManager.init();
+        PassivePortManager.init();
 
         final FTPServer ftpServer = new FTPServer();
 

@@ -40,34 +40,13 @@ public class PassiveDataTransfer extends Thread
     // 分配Passive端口，并且完成绑定
     public int allocatePort()
     {
-        if (localPassivePort == -1)
+        try
         {
-            String passivePort = Configs.get("ftp.proxy.passive.port");
-            if (passivePort == null || passivePort.matches("^(\\d+)\\-(\\d+)$") == false) throw new RuntimeException("no passive port range defined");
-            int min = Integer.parseInt(passivePort.replaceAll("^(\\d+)\\-(\\d+)$", "$1"));
-            int max = Integer.parseInt(passivePort.replaceAll("^(\\d+)\\-(\\d+)$", "$2"));
-            if (min < 1024 || min > 65535) throw new RuntimeException("invalid passive port: " + min);
-            if (max < min || max > 65535) throw new RuntimeException("invalid passive port: " + max);
-
-            System.err.println("Port Range: " + min + " => " + max);
-
-            try { localPassiveServerSocket = new ServerSocket(); } catch(Exception ex) { throw new RuntimeException(ex); }
-            // 尝试绑定100次，再不成功就直接退出了
-            boolean bound = false;
-            for (int i = 0; i < 100; i++)
-            {
-                int port = (int)(min + Math.random() * (max - min));
-                try
-                {
-                    localPassiveServerSocket.bind(new InetSocketAddress("0.0.0.0", port), 1);
-                    bound = true;
-                    localPassivePort = port;
-                    break;
-                }
-                catch(Exception ex) { }
-            }
-            if (!bound) throw new RuntimeException("passive port allocate failed after 100 times retries");
+            localPassiveServerSocket = new ServerSocket();
         }
+        catch(Exception ex) { throw new RuntimeException(ex); }
+
+        localPassivePort = PassivePortManager.allocate(localPassiveServerSocket);
         return localPassivePort;
     }
 

@@ -112,7 +112,7 @@ public class PassiveDataTransfer extends Thread
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            if (!(ex instanceof InterruptedException)) ex.printStackTrace();
         }
         finally
         {

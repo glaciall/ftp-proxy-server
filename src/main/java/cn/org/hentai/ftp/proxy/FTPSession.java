@@ -120,7 +120,7 @@ public class FTPSession extends Thread
             }
             catch(Exception ex)
             {
-                throw new RuntimeException(ex);
+                ex.printStackTrace();
             }
         }
     }
